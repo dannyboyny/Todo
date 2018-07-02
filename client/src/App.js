@@ -26,6 +26,12 @@ const UpdateMutation = gql`
   }
 `;
 
+const RemoveMutation = gql`
+  mutation($id: ID!) {
+    removeTodo(id: $id)
+  }
+`;
+
 class App extends Component {
   updateTodo = async todo => {
     // update todo
@@ -54,6 +60,19 @@ class App extends Component {
 
   removeTodo = async todo => {
     // remove todo
+    await this.props.removeTodo({
+      variables: {
+        id: todo.id
+      },
+      update: store => {
+        // Read the data from the cache for this query.
+        const data = store.readQuery({ query: TodosQuery });
+        // Remove todo from the data.
+        data.todos = data.todos.filter(x => x.id !== todo.id);
+        // Write data back to cache.
+        store.writeQuery({ query: TodosQuery, data });
+      }
+    })
   };
 
   render() {
@@ -97,6 +116,7 @@ class App extends Component {
 }
 
 export default compose(
-  graphql(UpdateMutation, { name: "updateTodo"}),
+  graphql(UpdateMutation, { name: 'updateTodo'}),
+  graphql(RemoveMutation, { name: 'removeTodo'}),
   graphql(TodosQuery)
 )(App);
