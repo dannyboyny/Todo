@@ -16,7 +16,7 @@
   "author": "Daniel Hernandez",
   "license": "ISC",
   "dependencies": {
-    "graphql-yoga": "^1.14.10",
-    "mongoose": "^5.1.7"
+    "graphql-yoga": "^1.16.7",
+    "mongoose": "^5.3.9"
   }
 }
