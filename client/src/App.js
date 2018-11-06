@@ -105,7 +105,7 @@ class App extends Component {
 
   render() {
     const {
-      data: {loading, todos }
+      data: { loading, todos }
     } = this.props;
     if (loading) return null;
 
